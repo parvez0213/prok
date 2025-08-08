@@ -23,6 +23,10 @@ export const router = createBrowserRouter([
     element: <Signup />,
   },
   {
+    path: '/feed',
+    element: <Feed />,
+  },
+  {
     path: '/profile',
     element: <ProfileView />,
   },
