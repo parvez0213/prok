@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from config import Config
@@ -8,9 +8,7 @@ import os
 # Load environment variables
 load_dotenv()
 
-# Import models
-from models.user import User, db as user_db
-from models.profile import Profile, Skill, Experience, Education, db as profile_db
+# Note: Avoid importing models at module import time to prevent ImportError during deploy
 
 # Create Flask app
 app = Flask(__name__)
@@ -45,6 +43,11 @@ def setup_database():
 def create_app():
     """Application factory function"""
     return app
+
+# Health check endpoint for deployment verification
+@app.route('/api/test', methods=['GET'])
+def api_test():
+    return jsonify({"status": "ok"}), 200
 
 if __name__ == '__main__':
     # Setup database tables
